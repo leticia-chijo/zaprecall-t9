@@ -1,9 +1,9 @@
 import styled from "styled-components"
 
-export default function Footer() {
+export default function Footer({totalQuestions, questionsCounter}) {
     return (
         <FooterConcluidos>
-            Concluídos 0/100
+             {questionsCounter}/{totalQuestions} CONCLUÍDOS
         </FooterConcluidos>
     )
 }

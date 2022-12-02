@@ -2,21 +2,30 @@ import Flashcard from "./Flashcard"
 import Footer from "./Footer"
 import logo from "../assets/logo.png"
 import styled from "styled-components"
+import deckReact from "../constants/deckReact"
+import { useState } from "react"
 
 export default function DeckScreen() {
+    const [counter, setCounter] = useState(0)
+
     return (
         <ScreenContaier>
+
             <LogoContainer>
                 <img src={logo} alt="Logo do ZapRecall - raio amarelo" />
                 <h1>ZapRecall</h1>
             </LogoContainer>
-            
-            <Flashcard />
-            <Flashcard />
-            <Flashcard />
-            <Flashcard />
 
-            <Footer />
+            {deckReact.map((card, i) => (
+                <Flashcard
+                    key={card.question}
+                    index={i}
+                    card={card}
+                />
+            ))}
+
+            <Footer totalQuestions={deckReact.length} questionsCounter={counter}/>
+            
         </ScreenContaier>
     )
 }

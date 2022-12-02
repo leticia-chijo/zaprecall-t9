@@ -1,11 +1,11 @@
 import styled from "styled-components"
 import play from "../assets/seta_play.png"
 
-export default function Flashcard(){
+export default function Flashcard({ index, card }) {
     return (
         <PerguntaFechada>
-            <p>Pergunta X</p>
-            <img src={play} alt="Ícone play"/>
+            <p>Pergunta {index + 1}</p>
+            <img src={play} alt="Ícone play" />
         </PerguntaFechada>
     )
 }
