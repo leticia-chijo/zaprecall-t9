@@ -5,6 +5,7 @@ import styled from "styled-components"
 import deckReact from "../constants/deckReact"
 import { useState } from "react"
 
+
 export default function DeckScreen() {
     const [counter, setCounter] = useState(0)
 
@@ -25,7 +26,7 @@ export default function DeckScreen() {
             ))}
 
             <Footer totalQuestions={deckReact.length} questionsCounter={counter}/>
-            
+
         </ScreenContaier>
     )
 }

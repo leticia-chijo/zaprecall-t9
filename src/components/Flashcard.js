@@ -1,12 +1,14 @@
 import { useState } from "react"
 import styled from "styled-components"
-import play from "../assets/seta_play.png"
 import turnArrow from "../assets/seta_virar.png"
+import StatusIcon from "./StatusIcon"
+import { VERDE, VERMELHO, AMARELO, CINZA } from "../constants/colors"
 
 export default function Flashcard({ index, card }) {
     const [started, setStarted] = useState(false)
     const [turned, setTurned] = useState(false)
     const [finished, setFinished] = useState(false)
+    const [status, setStatus] = useState("not answered") // correct, almost, wrong
 
     function showQuestion() {
         if (!finished) {
@@ -18,17 +20,18 @@ export default function Flashcard({ index, card }) {
         setTurned(true)
     }
 
-    function answerQuestion() {
+    function answerQuestion(questionStatus) {
         setStarted(false)
         setFinished(true)
+        setStatus(questionStatus)
     }
 
     return (
         <>
             {!started ? (
-                <PerguntaFechada>
+                <PerguntaFechada status={status}>
                     <p>Pergunta {index + 1}</p>
-                    <img onClick={showQuestion} src={play} alt="Ícone play" />
+                    <StatusIcon status={status} showQuestion={showQuestion} />
                 </PerguntaFechada>
             ) : (
                 <PerguntaAberta>
@@ -41,9 +44,9 @@ export default function Flashcard({ index, card }) {
                         <>
                             {card.answer}
                             <ContainerBotoes>
-                                <button onClick={answerQuestion}>Não Lembrei</button>
-                                <button onClick={answerQuestion}>Quase não Lembrei</button>
-                                <button onClick={answerQuestion}>Zap!</button>
+                                <BotaoResposta background={VERMELHO} onClick={() => answerQuestion("wrong")}>Não Lembrei</BotaoResposta>
+                                <BotaoResposta background={AMARELO} onClick={() => answerQuestion("almost")}>Quase não Lembrei</BotaoResposta>
+                                <BotaoResposta background={VERDE} onClick={() => answerQuestion("correct")}>Zap!</BotaoResposta>
                             </ContainerBotoes>
                         </>
                     )}
@@ -73,7 +76,19 @@ const PerguntaFechada = styled.div`
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
-    color: #333333;
+    text-decoration: ${props => props.status === "not answered" ? "none" : "line-through"};
+    color: ${props => {
+        switch(props.status){
+            case "correct":
+                return VERDE
+            case "wrong":
+                return VERMELHO
+            case "almost":
+                return AMARELO
+            default:
+                return CINZA
+        }
+    }}
   }
 `
 const PerguntaAberta = styled.div`
@@ -104,7 +119,9 @@ const ContainerBotoes = styled.div`
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
-    button {
+`
+
+const BotaoResposta = styled.button`
         width: 90px;
         font-family: 'Recursive';
         font-style: normal;
@@ -116,9 +133,8 @@ const ContainerBotoes = styled.div`
         justify-content: center;
         text-align: center;
         color: #FFFFFF;
-        background: blue;
+        background: ${props => props.background};
         border-radius: 5px;
-        border: 1px solid blue;
+        border: 1px solid ${props => props.background};
         padding:5px;
-    }
 `
