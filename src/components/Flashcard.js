@@ -4,7 +4,7 @@ import turnArrow from "../assets/seta_virar.png"
 import StatusIcon from "./StatusIcon"
 import { VERDE, VERMELHO, AMARELO, CINZA } from "../constants/colors"
 
-export default function Flashcard({ index, card }) {
+export default function Flashcard({ index, card, increaseCounter }) {
     const [started, setStarted] = useState(false)
     const [turned, setTurned] = useState(false)
     const [finished, setFinished] = useState(false)
@@ -24,6 +24,7 @@ export default function Flashcard({ index, card }) {
         setStarted(false)
         setFinished(true)
         setStatus(questionStatus)
+        increaseCounter()
     }
 
     return (

@@ -9,6 +9,10 @@ import { useState } from "react"
 export default function DeckScreen() {
     const [counter, setCounter] = useState(0)
 
+    function increaseCounter() {
+        setCounter(counter + 1)
+    }
+
     return (
         <ScreenContaier>
 
@@ -22,10 +26,11 @@ export default function DeckScreen() {
                     key={card.question}
                     index={i}
                     card={card}
+                    increaseCounter={increaseCounter}
                 />
             ))}
 
-            <Footer totalQuestions={deckReact.length} questionsCounter={counter}/>
+            <Footer totalQuestions={deckReact.length} questionsCounter={counter} />
 
         </ScreenContaier>
     )
