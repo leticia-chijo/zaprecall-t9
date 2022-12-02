@@ -5,7 +5,8 @@ import styled from "styled-components"
 import deckReact from "../constants/deckReact"
 import { useState } from "react"
 import StatusIcon from "./StatusIcon"
-
+import sad from "../assets/sad.png"
+import happy from "../assets/party.png"
 
 export default function DeckScreen() {
     const [counter, setCounter] = useState(0)
@@ -38,6 +39,25 @@ export default function DeckScreen() {
             ))}
 
             <Footer totalQuestions={deckReact.length} questionsCounter={counter}>
+                {counter === deckReact.length && (
+                    answers.includes("wrong") ? (
+                        <Finalizacao>
+                            <img src={sad} alt="Emoji triste" />
+                            <span>Putz...</span>
+                            <p>Ainda faltam algumas... Mas não desanime!</p>
+                        </Finalizacao>
+
+                    ) : (
+                        <Finalizacao>
+                            <img src={happy} alt="Emoji feliz" />
+                            <span>Parabéns!</span>
+                            <p>Você não esqueceu nenhum flashcard!</p>
+                        </Finalizacao>
+                    )
+                )}
+
+                {counter}/{deckReact.length} CONCLUÍDOS
+
                 <StatusPerguntas>
                     {answers.map(a => <StatusIcon status={a} />)}
                 </StatusPerguntas>
@@ -80,4 +100,16 @@ const StatusPerguntas = styled.div`
     display: flex;
     margin-top: 10px;
     gap: 5px;
+`
+const Finalizacao = styled.div`
+    text-align: center;
+    margin-bottom: 20px;
+    span {
+        margin-left: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    p {
+        margin-top: 20px;
+    }
 `
