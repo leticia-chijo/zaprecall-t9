@@ -4,13 +4,19 @@ import logo from "../assets/logo.png"
 import styled from "styled-components"
 import deckReact from "../constants/deckReact"
 import { useState } from "react"
+import StatusIcon from "./StatusIcon"
 
 
 export default function DeckScreen() {
     const [counter, setCounter] = useState(0)
+    const [answers, setAnswers] = useState([])
 
     function increaseCounter() {
         setCounter(counter + 1)
+    }
+
+    function addAnswer(status) {
+        setAnswers([...answers, status])
     }
 
     return (
@@ -27,10 +33,16 @@ export default function DeckScreen() {
                     index={i}
                     card={card}
                     increaseCounter={increaseCounter}
+                    addAnswer={addAnswer}
                 />
             ))}
 
-            <Footer totalQuestions={deckReact.length} questionsCounter={counter} />
+            <Footer totalQuestions={deckReact.length} questionsCounter={counter}>
+                <StatusPerguntas>
+                    {answers.map(a => <StatusIcon status={a} />)}
+                </StatusPerguntas>
+
+            </Footer>
 
         </ScreenContaier>
     )
@@ -63,4 +75,9 @@ const LogoContainer = styled.div`
     color: #FFFFFF;
     margin-left: 20px;
   }
+`
+const StatusPerguntas = styled.div`
+    display: flex;
+    margin-top: 10px;
+    gap: 5px;
 `

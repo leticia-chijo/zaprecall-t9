@@ -4,7 +4,7 @@ import turnArrow from "../assets/seta_virar.png"
 import StatusIcon from "./StatusIcon"
 import { VERDE, VERMELHO, AMARELO, CINZA } from "../constants/colors"
 
-export default function Flashcard({ index, card, increaseCounter }) {
+export default function Flashcard({ index, card, increaseCounter, addAnswer }) {
     const [started, setStarted] = useState(false)
     const [turned, setTurned] = useState(false)
     const [finished, setFinished] = useState(false)
@@ -25,6 +25,7 @@ export default function Flashcard({ index, card, increaseCounter }) {
         setFinished(true)
         setStatus(questionStatus)
         increaseCounter()
+        addAnswer(questionStatus)
     }
 
     return (
@@ -121,7 +122,6 @@ const ContainerBotoes = styled.div`
     justify-content: space-between;
     margin-top: 10px;
 `
-
 const BotaoResposta = styled.button`
         width: 90px;
         font-family: 'Recursive';
